@@ -34,7 +34,7 @@ const PrintView: React.FC<PrintViewProps> = ({ review, onBack }) => {
           <div className="text-right">
             <p className="font-bold text-lg">{review.employeeName}</p>
             <p className="text-gray-600">{review.employeeRole}</p>
-            <p className="text-sm text-gray-500 mt-2">Date: {review.date}</p>
+            <p className="text-sm text-gray-500 mt-2">Date: {review.date.split('-').reverse().join('/')}</p>
           </div>
         </div>
 
@@ -51,7 +51,7 @@ const PrintView: React.FC<PrintViewProps> = ({ review, onBack }) => {
                    <p className="whitespace-pre-wrap">{review.employeeAnswers[q.id] || '-'}</p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded text-sm">
-                   <p className="font-semibold text-gray-500 text-xs uppercase mb-1">Directeur</p>
+                   <p className="font-semibold text-gray-500 text-xs uppercase mb-1">Manager</p>
                    <p className="whitespace-pre-wrap">{review.managerAnswers[q.id] || '-'}</p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ const PrintView: React.FC<PrintViewProps> = ({ review, onBack }) => {
             <p className="text-xs text-gray-500">Précédé de la mention "Lu et approuvé"</p>
           </div>
           <div className="border-t border-gray-400 pt-4">
-            <p className="font-bold mb-8">Signature du Directeur</p>
+            <p className="font-bold mb-8">Signature du Manager</p>
           </div>
         </div>
       </div>

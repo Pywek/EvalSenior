@@ -1,7 +1,9 @@
+
 export enum ReviewStatus {
   NOT_STARTED = 'Non commencé',
   EMPLOYEE_FILLED = 'Saisi par salarié',
-  MANAGER_PREPARED = 'Préparé par directeur',
+  MANAGER_PREPARED = 'Préparé par manager',
+  BOTH_PREPARED = 'Préparé par tout le monde',
   COMPLETED = 'Terminé & Signé'
 }
 
@@ -18,6 +20,7 @@ export interface ReviewData {
   employeeName: string;
   employeeRole: string;
   date: string;
+  validatedAt?: string; // Date de validation de l'entretien
   status: ReviewStatus;
   employeeAnswers: Record<string, string>;
   managerAnswers: Record<string, string>;

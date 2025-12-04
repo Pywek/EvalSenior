@@ -2,17 +2,27 @@ import { GoogleGenAI } from "@google/genai";
 import { ReviewData } from "../types";
 import { QUESTIONS } from "../constants";
 
-export const generateSynthesis = async (review: ReviewData): Promise<string> => {
+export interface AIAnalysisResult {
+  synthesis: string;
+  objectives: string;
+  training: string;
+}
+
+export const generateSynthesis = async (review: ReviewData): Promise<AIAnalysisResult> => {
   if (!process.env.API_KEY) {
     console.warn("API Key missing");
-    return "Erreur: Clé API manquante. Veuillez configurer l'API Key.";
+    return {
+      synthesis: "Erreur: Clé API manquante.",
+      objectives: "",
+      training: ""
+    };
   }
 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   // Construct a prompt context
-  let context = `Tu es un expert RH assistant un directeur de résidence senior pour des entretiens annuels. 
-  Ton but est de rédiger une synthèse professionnelle, constructive et bienveillante basée sur les réponses de l'employé et du manager.
+  let context = `Tu es un expert RH assistant un Manager de résidence senior pour des entretiens annuels. 
+  Ton but est de préparer le compte-rendu final basé sur les réponses de l'employé et du manager.
   
   Employé: ${review.employeeName} (${review.employeeRole})
   
@@ -25,21 +35,38 @@ export const generateSynthesis = async (review: ReviewData): Promise<string> => 
     context += `- Avis Manager: ${review.managerAnswers[q.id] || "Non renseigné"}\n`;
   });
 
-  context += `\nTâche : Rédige une "Synthèse de l'entretien" d'environ 150 mots. 
-  1. Souligne les points d'accord (réussites).
-  2. Mentionne avec tact les points d'amélioration identifiés par le manager s'il y en a.
-  3. Adopte un ton encourageant pour l'année à venir.
-  Ne mets pas de titre, juste le corps du texte.`;
+  context += `\nTâche : Analyse ces réponses et génère une réponse au format JSON strict avec les 3 champs suivants :
+  1. "synthesis": Une synthèse professionnelle, bienveillante et ULTRA-CONCISE (environ 30 à 40 mots maximum). Va droit au but, pas de blabla.
+  2. "objectives": Un seul objectif prioritaire et concret pour l'année prochaine (format liste à puces, 1 seul point).
+  3. "training": Une seule proposition de formation ou de souhait (format liste à puces, 1 seul point).
+  
+  Réponds uniquement avec le JSON.`;
 
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: context,
+      config: {
+        responseMimeType: "application/json"
+      }
     });
     
-    return response.text || "Impossible de générer la synthèse.";
+    const text = response.text;
+    if (!text) throw new Error("No response from AI");
+
+    const parsed = JSON.parse(text);
+    return {
+      synthesis: parsed.synthesis || "Impossible de générer la synthèse.",
+      objectives: parsed.objectives || "",
+      training: parsed.training || ""
+    };
+
   } catch (error) {
     console.error("Gemini Error:", error);
-    return "Une erreur est survenue lors de la génération de la synthèse.";
+    return {
+      synthesis: "Une erreur est survenue lors de l'analyse IA.",
+      objectives: "",
+      training: ""
+    };
   }
 };

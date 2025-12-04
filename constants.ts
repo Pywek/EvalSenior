@@ -1,4 +1,10 @@
+
 import { Question } from './types';
+
+export const MANAGER_PASSWORD = 'admin';
+export const DEFAULT_DB_URL = 'https://script.google.com/macros/s/AKfycbx30I5HGX7GBrJksrtjrU-s0BBlSupVFF2Bi-b_gLddoogDIufUHFXNE2sEd2OACsjx/exec';
+// TODO: Remplacez cette URL par le lien direct de votre image (hébergée en ligne)
+export const APP_LOGO = 'https://cdn-icons-png.flaticon.com/512/9474/9474953.png';
 
 export const QUESTIONS: Question[] = [
   {
@@ -38,29 +44,17 @@ export const QUESTIONS: Question[] = [
 export const INITIAL_REVIEWS = [
   {
     id: '1',
-    employeeName: 'Sophie Martin',
-    employeeRole: 'Infirmière Coordinatrice',
+    employeeName: 'Exemple Demo',
+    employeeRole: 'Infirmier',
     date: new Date().toISOString().split('T')[0],
     status: 'Saisi par salarié',
     employeeAnswers: {
-      achievements: "Mise en place du nouveau protocole de distribution des médicaments. Bonne intégration des deux nouvelles aides-soignantes.",
-      difficulties: "Le logiciel de soin a eu beaucoup de bugs en début d'année, ce qui a ralenti l'administratif. Parfois difficile de gérer les familles anxieuses.",
-      skills_soft: "Très bonne relation avec l'équipe. Je pense être à l'écoute.",
-      skills_hard: "Maitrise totale des soins techniques. Besoin de rafraichissement sur la gestion des plannings.",
-      atmosphere: "Bonne dynamique, mais un peu de fatigue générale en décembre."
+      achievements: "Ceci est une donnée de démonstration locale.",
+      difficulties: "Connectez la base de données pour voir les vraies données.",
+      skills_soft: "",
+      skills_hard: "",
+      atmosphere: ""
     },
-    managerAnswers: {},
-    finalSynthesis: "",
-    objectivesNextYear: "",
-    trainingNeeds: ""
-  },
-  {
-    id: '2',
-    employeeName: 'Marc Dubois',
-    employeeRole: 'Agent de Maintenance',
-    date: new Date().toISOString().split('T')[0],
-    status: 'Non commencé',
-    employeeAnswers: {},
     managerAnswers: {},
     finalSynthesis: "",
     objectivesNextYear: "",

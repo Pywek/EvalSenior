@@ -1,5 +1,5 @@
 {
   "name": "EvalSenior - Entretiens Annuels",
-  "description": "Application de gestion des entretiens annuels optimisée pour les résidences seniors. Permet la double saisie (salarié/directeur), la confrontation en séance et la génération de synthèse assistée par IA.",
+  "description": "Application de gestion des entretiens annuels optimisée pour les résidences seniors. Permet la double saisie (salarié/manager), la confrontation en séance et la génération de synthèse assistée par IA.",
   "requestFramePermissions": []
 }
